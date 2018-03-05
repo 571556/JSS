@@ -37,12 +37,17 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 			throw new EmptyCollectionException("LinkedList");
 		
 		T result = tail.getElement();
+		DoublyLinearNode<T> current = tail;
+		DoublyLinearNode<T> previous = current.getPrevious();
 		
 		if(count == 1)
 			head = tail = null;
-		
-		
-		return null;
+		else {
+			previous.setNext(null);
+			current = null;
+			tail = previous;
+		}
+		return result;
 	}
 
 	@Override
@@ -94,8 +99,16 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public boolean contains(T target) {
-		
-		return false;
+		DoublyLinearNode<T> current = head;
+		boolean found = false;
+		while(current != null && !found) {
+			if(current.equals(target))
+				found = true;
+			else 
+				current = current.getNext();
+		}
+			
+		return found;
 	}
 
 	@Override
@@ -110,7 +123,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	
