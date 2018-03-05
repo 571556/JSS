@@ -16,13 +16,32 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public T removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		if (count == 0)
+			throw new EmptyCollectionException("LinkedList");
+		
+		T result = head.getElement();
+		
+		if (count == 1)
+			head = tail = null;
+		
+		head = head.getNext();
+		count--;
+		modCount++;
+			
+		return result;
 	}
 
 	@Override
 	public T removeLast() {
-		// TODO Auto-generated method stub
+		if (count == 0)
+			throw new EmptyCollectionException("LinkedList");
+		
+		T result = tail.getElement();
+		
+		if(count == 1)
+			head = tail = null;
+		
+		
 		return null;
 	}
 
@@ -35,13 +54,15 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		DoublyLinearNode<T> previous = null;
 		DoublyLinearNode<T> current = head;
 		
-		while ( current != null && !found)
+		while ( current != null && !found) {
 			if(element.equals(current.getElement()))
 				found = true;
 			else {
 				previous = current;
 				current = current.getNext();
+				}
 			}
+		
 		if (!found)
 			throw new ElementNotFoundException("LinkedList");
 		
@@ -63,14 +84,12 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public T first() {
-		// TODO Auto-generated method stub
-		return null;
+		return head.getElement();
 	}
 
 	@Override
 	public T last() {
-		// TODO Auto-generated method stub
-		return null;
+		return tail.getElement();
 	}
 
 	@Override
@@ -81,14 +100,12 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (count == 0);
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return count;
 	}
 
 	@Override
