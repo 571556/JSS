@@ -44,9 +44,9 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
 		if (isEmpty())
 			throw new EmptyCollectionException("ArrayList");
 		
+		rear--;
 		result = list[rear];
 		list[rear] = null;
-		rear--;
 		modCount++;
 		return result;
 	}
