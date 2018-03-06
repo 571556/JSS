@@ -1,25 +1,27 @@
 package jsjf;
 
 public class LinkedListStack<T> extends LinkedList<T> implements StackADT<T> {
-
-	private 
+	
+	public LinkedListStack() {
+		super();
+	}
 	
 	@Override
 	public void push(T element) {
-		// TODO Auto-generated method stub
-		
+		DoublyLinearNode<T> temp = new DoublyLinearNode<T>(element);
+		temp.setNext(head);
+		head = temp;
+		count++;
 	}
 
 	@Override
 	public T pop() {
-		// TODO Auto-generated method stub
-		return null;
+		return removeFirst();
 	}
 
 	@Override
 	public T peek() {
-		// TODO Auto-generated method stub
-		return null;
+		return first();
 	}
 
 	

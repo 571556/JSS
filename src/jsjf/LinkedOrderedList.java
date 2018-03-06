@@ -1,14 +1,17 @@
 package jsjf;
+
 import jsjf.exception.*;
 
 public class LinkedOrderedList<T> extends LinkedList<T> implements OrderedListADT<T>{
 
 	public LinkedOrderedList(){
+
 		super();
 	}
 	
 	@Override
 	public void add(T element) {
+
 
 		if (!(element instanceof Comparable))
 			throw new NonComparableElementException("LinkedOrderedList");
