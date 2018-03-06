@@ -121,5 +121,13 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
 			}
 		return result;
 	}
+	
+	public String toString() {
+		String string = "";
+		for(int i = 0; i < rear; i++)
+			string += list[i].toString() + "\n";
+		
+		return string;
+	}
 
 }
