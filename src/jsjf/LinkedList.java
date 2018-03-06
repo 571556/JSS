@@ -127,5 +127,17 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		return null;
 	}
 	
+	public String toString() {
+		String string = "";
+		DoublyLinearNode<T> temp = head;
+		int scan = 0;
+		while(scan < size()) {
+			string += temp.getElement().toString() + "\n";
+			temp = temp.getNext();
+			scan++;
+		}
+		return string;
+	}
+	
 	
 }
