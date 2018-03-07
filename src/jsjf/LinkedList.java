@@ -102,7 +102,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		DoublyLinearNode<T> current = head;
 		boolean found = false;
 		while(current != null && !found) {
-			if(current.equals(target))
+			if(current.getElement().equals(target))
 				found = true;
 			else 
 				current = current.getNext();
