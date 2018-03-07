@@ -1,6 +1,7 @@
 package jsjf;
 import jsjf.exception.*;
 
+public class LinkedUnorderedList<T> extends LinkedList<T> implements UnorderedListADT<T>{
 
 	public LinkedUnorderedList() {
 		super();
