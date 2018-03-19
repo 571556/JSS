@@ -9,7 +9,7 @@ public class LinkedUnorderedList<T> extends LinkedList<T> implements UnorderedLi
 
 	@Override
 	public void addToFront(T element) {
-		DoublyLinearNode<T> newNode = new DoublyLinearNode<T>(element);
+		DoubleNode<T> newNode = new DoubleNode<T>(element);
 		if(isEmpty())
 			head = tail = newNode;
 		
@@ -22,7 +22,7 @@ public class LinkedUnorderedList<T> extends LinkedList<T> implements UnorderedLi
 
 	@Override
 	public void addToRear(T element) {
-		DoublyLinearNode<T> newNode = new DoublyLinearNode<T>(element);
+		DoubleNode<T> newNode = new DoubleNode<T>(element);
 		if(isEmpty())
 			head = tail = newNode;
 		
@@ -39,9 +39,9 @@ public class LinkedUnorderedList<T> extends LinkedList<T> implements UnorderedLi
 		if(isEmpty())
 			throw new ElementNotFoundException("LinkedUnorderedList");
 		
-		DoublyLinearNode newNode = new DoublyLinearNode<T>(element);
-		DoublyLinearNode current = head;
-		DoublyLinearNode afterCurrent = null;
+		DoubleNode newNode = new DoubleNode<T>(element);
+		DoubleNode current = head;
+		DoubleNode afterCurrent = null;
 		boolean found = false;
 		
 		while(current != null && !found)
