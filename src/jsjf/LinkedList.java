@@ -23,8 +23,9 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		
 		if (count == 1)
 			head = tail = null;
+		else
+			head = head.getNext();
 		
-		head = head.getNext();
 		count--;
 		modCount++;
 			
@@ -36,13 +37,14 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		if (count == 0)
 			throw new EmptyCollectionException("LinkedList");
 		
-		T result = tail.getElement();
 		DoublyLinearNode<T> current = tail;
-		DoublyLinearNode<T> previous = current.getPrevious();
+		DoublyLinearNode<T> previous;
+		T result = current.getElement();
 		
 		if(count == 1)
 			head = tail = null;
 		else {
+			previous = current.getPrevious();
 			previous.setNext(null);
 			current = null;
 			tail = previous;
