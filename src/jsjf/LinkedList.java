@@ -2,6 +2,10 @@ package jsjf;
 
 import java.util.Iterator;
 import jsjf.exception.*;
+import java.util.ConcurrentModificationException;
+import java.util.NoSuchElementException;
+import java.lang.UnsupportedOperationException;
+
 
 public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
@@ -38,17 +42,18 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 			throw new EmptyCollectionException("LinkedList");
 		
 		DoublyLinearNode<T> current = tail;
-		DoublyLinearNode<T> previous;
 		T result = current.getElement();
 		
 		if(count == 1)
 			head = tail = null;
 		else {
-			previous = current.getPrevious();
-			previous.setNext(null);
-			current = null;
-			tail = previous;
+			tail = current.getPrevious();
+			tail.setNext(null);
 		}
+		
+		count--;
+		modCount++;
+		
 		return result;
 	}
 
@@ -141,5 +146,43 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		return string;
 	}
 	
+	private class LinkedListIterator implements Iterator<T>{
+
+		private DoublyLinearNode<T> current;
+		private int iteratorModCount;
+		
+		public LinkedListIterator() {
+			current = head;
+			iteratorModCount = modCount;
+		}
+		
+		@Override
+		public boolean hasNext() throws ConcurrentModificationException{
+			
+			if(iteratorModCount != modCount)
+				throw new ConcurrentModificationException();
+			
+			return (current != null);
+			
+		}
+
+		@Override
+		public T next() throws ConcurrentModificationException{
+			
+			if(!hasNext())
+				throw new NoSuchElementException();
+			
+			T result = current.getElement();
+			current = current.getNext();
+			return result;
+		}
+		
+		@Override
+		public void remove() throws UnsupportedOperationException{
+			throw new UnsupportedOperationException();
+		}
+		
+		
+	}
 	
 }

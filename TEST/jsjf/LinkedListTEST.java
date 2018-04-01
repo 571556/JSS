@@ -62,5 +62,32 @@ public class LinkedListTEST {
 		
 	}
 	
+	@Test
+	public void removeTest() {
+		test.add(tall1);
+		test.add(tall2);
+		test.add(tall3);
+		test.add(tall4);
+		test.add(tall2);
+		
+		assertTrue(test.remove(tall1).equals(tall1));
+		assertTrue(test.remove(tall2).equals(tall2));
+		assertTrue(test.remove(tall2).equals(tall2));
+		assertTrue(test.remove(tall3).equals(tall3));
+		assertTrue(test.remove(tall4).equals(tall4));
+	}
+	
+	@Test
+	public void containsTest() {
+		test.add(tall1);
+		test.add(tall2);
+		test.add(tall3);
+		
+		assertTrue(test.contains(tall1));
+		assertTrue(test.contains(tall2));
+		assertTrue(test.contains(tall3));
+		assertFalse(test.contains(tall4));
+	}
+	
 	
 }
