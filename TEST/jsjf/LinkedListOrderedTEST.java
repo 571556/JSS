@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedListTEST {
+public class LinkedListOrderedTEST {
 
 	private LinkedOrderedList<Integer> test;
 	private LinkedOrderedList<Integer> fasit;
