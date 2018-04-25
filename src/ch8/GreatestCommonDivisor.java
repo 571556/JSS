@@ -10,9 +10,23 @@ public class GreatestCommonDivisor {
 	
 	public static int gcd(int a, int b) {
 		
-		if()
+		int result;
+		int var1;
+		int var2;
+		
+		if ( a % b == 0 )
+			result = b;
+		else
+			result = gcd(b,a);
+		
+		return result;	
+		
+	}
 	
+	private static int help(int a, int b) {
 		return 0;
 	}
+	
+	
 
 }
