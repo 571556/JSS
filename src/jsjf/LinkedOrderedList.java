@@ -18,10 +18,12 @@ public class LinkedOrderedList<T> extends LinkedList<T> implements OrderedListAD
 		
 		Comparable<T> comparableElement = (Comparable<T>)element;
 		
-		DoublyLinearNode<T> current = head;
-		DoublyLinearNode<T> previous = null;
-		DoublyLinearNode<T> newNode = new DoublyLinearNode<T>(element);
-		int scan = 1;
+
+		DoubleNode<T> current = head;
+		DoubleNode<T> previous = null;
+		DoubleNode<T> newNode = new DoubleNode<T>(element);
+		int scan = 0;
+
 		
 		if(size() == 0)
 			head = tail = newNode;

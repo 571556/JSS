@@ -10,7 +10,7 @@ import java.lang.UnsupportedOperationException;
 public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	protected int count;
-	protected DoublyLinearNode<T> head, tail;
+	protected DoubleNode<T> head, tail;
 	protected int modCount;
 	
 	public LinkedList() {
@@ -40,9 +40,10 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 	public T removeLast() {
 		if (count == 0)
 			throw new EmptyCollectionException("LinkedList");
-		
+	
 		DoublyLinearNode<T> current = tail;
 		T result = current.getElement();
+
 		
 		if(count == 1)
 			head = tail = null;
@@ -63,8 +64,8 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 			throw new EmptyCollectionException("LinkedList");
 		
 		boolean found = false;
-		DoublyLinearNode<T> previous = null;
-		DoublyLinearNode<T> current = head;
+		DoubleNode<T> previous = null;
+		DoubleNode<T> current = head;
 		
 		while ( current != null && !found) {
 			if(element.equals(current.getElement()))
@@ -106,7 +107,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public boolean contains(T target) {
-		DoublyLinearNode<T> current = head;
+		DoubleNode<T> current = head;
 		boolean found = false;
 		while(current != null && !found) {
 			if(current.getElement().equals(target))
@@ -136,7 +137,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 	
 	public String toString() {
 		String string = "";
-		DoublyLinearNode<T> temp = head;
+		DoubleNode<T> temp = head;
 		int scan = 0;
 		while(scan < size()) {
 			string += temp.getElement().toString() + "\n";

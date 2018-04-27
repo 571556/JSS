@@ -4,7 +4,7 @@ import jsjf.exception.*;
 public class LinkedDeque<T> implements DequeADT<T>{
 	
 	private int count;
-	private DoublyLinearNode<T> head,tail;
+	private DoubleNode<T> head,tail;
 	
 	public LinkedDeque() {
 		count = 0;
@@ -12,7 +12,7 @@ public class LinkedDeque<T> implements DequeADT<T>{
 	}
 
 	public void insertFront(T element) {
-		DoublyLinearNode<T> node = new DoublyLinearNode<T>(element);
+		DoubleNode<T> node = new DoubleNode<T>(element);
 		if (isEmpty()) {
 			tail = node;
 			head = node;
@@ -35,7 +35,7 @@ public class LinkedDeque<T> implements DequeADT<T>{
 	}
 
 	public void insertRear(T element) {
-		DoublyLinearNode<T> node = new DoublyLinearNode<T>(element);
+		DoubleNode<T> node = new DoubleNode<T>(element);
 		if(isEmpty()) {
 			head = node;
 			tail = node;
@@ -78,7 +78,7 @@ public class LinkedDeque<T> implements DequeADT<T>{
 	}
 	
 	public String toString() {
-		DoublyLinearNode<T> temp = head;
+		DoubleNode<T> temp = head;
 		String rString = "";
 		for(int i = 0; i < count; i++){
 			rString += temp.getElement().toString() + "\n";
