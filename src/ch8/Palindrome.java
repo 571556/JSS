@@ -10,8 +10,14 @@ public class Palindrome {
 	
 	private static boolean palindrom(String s) {
 		boolean result = false;
-		if(String )
+		String reverse = reverse(s);
+		if()
 			
+			
+	}
+	
+	private static void palindrom(String s,String d) {
+		
 	}
 	
 	private static String reverse(String s) {
