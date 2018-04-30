@@ -35,16 +35,20 @@ public class Sort {
 	public static <T extends Comparable<T>> void bubbleSort(T[] data) {
 		
 		int position, scan;
-		int modCount = 0;
+		int notModCount = 0;
 		
 		for(position = data.length-1; position >= 0; position--) {
+			if(notModCount == position-1)
+				position = 0;
+			else
+				notModCount = 0;
 			for(scan = 0; scan <= position-1; scan++) {
-				if(data[scan].compareTo(data[scan+1]) > 0) {
+				if(data[scan].compareTo(data[scan+1]) > 0)
 					swap(data,scan,scan+1);
-					modCount++;
-				}
-					
+				else
+					notModCount++;
 			}
+		
 		}
 		
 	}
