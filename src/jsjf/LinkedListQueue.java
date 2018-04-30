@@ -8,7 +8,7 @@ public class LinkedListQueue<T> extends LinkedList<T> implements QueueADT<T>{
 	
 	@Override
 	public void enqueue(T element) {
-		DoublyLinearNode<T> temp = new DoublyLinearNode<T>(element);
+		DoubleNode<T> temp = new DoubleNode<T>(element);
 		if(count == 0) {
 			head = tail = temp;
 			count++;

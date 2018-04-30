@@ -41,7 +41,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 		if (count == 0)
 			throw new EmptyCollectionException("LinkedList");
 	
-		DoublyLinearNode<T> current = tail;
+		DoubleNode<T> current = tail;
 		T result = current.getElement();
 
 		
@@ -149,7 +149,7 @@ public abstract class LinkedList<T> implements ListADT<T>, Iterable<T>{
 	
 	private class LinkedListIterator implements Iterator<T>{
 
-		private DoublyLinearNode<T> current;
+		private DoubleNode<T> current;
 		private int iteratorModCount;
 		
 		public LinkedListIterator() {

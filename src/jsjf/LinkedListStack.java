@@ -8,7 +8,7 @@ public class LinkedListStack<T> extends LinkedList<T> implements StackADT<T> {
 	
 	@Override
 	public void push(T element) {
-		DoublyLinearNode<T> temp = new DoublyLinearNode<T>(element);
+		DoubleNode<T> temp = new DoubleNode<T>(element);
 		temp.setNext(head);
 		head = temp;
 		count++;
