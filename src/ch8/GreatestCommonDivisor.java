@@ -11,21 +11,17 @@ public class GreatestCommonDivisor {
 	public static int gcd(int a, int b) {
 		
 		int result;
-		int var1;
-		int var2;
-		
-		if ( a % b == 0 )
+		if(a >= b && a % b == 0)
 			result = b;
-		else
+		else if(a < b)
 			result = gcd(b,a);
+		else
+			result = gcd(b,a % b);
 		
-		return result;	
+		return result;
 		
 	}
 	
-	private static int help(int a, int b) {
-		return 0;
-	}
 	
 	
 

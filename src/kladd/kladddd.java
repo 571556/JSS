@@ -4,10 +4,10 @@ public class kladddd {
 
 	public static void main(String[] args) {
 		
-		int n = 1;
-		int s = 1;
+		double d = 1.3235;
+		String s = d + "";
 		
-		System.out.println(n == s);
+		System.out.println(s.substring(2, 3));
 
 	}
 
