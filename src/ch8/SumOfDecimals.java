@@ -7,7 +7,7 @@ public class SumOfDecimals {
 
 	public static void main(String[] args) {
 		
-		System.out.println(sumOfDecimals(1.323453901));
+		System.out.println(sumOfDecimals(2.323453901));
 
 	}
 	
