@@ -16,13 +16,21 @@ public class BinaryTreeNode<T> {
 		if(left == null)
 			this.left = null;
 		else
-			this.left = left.getRootNode();
+			this.left = left.getRoot();
 		
 		if(right == null)
 			this.right = null;
 		else
-			this.right = right.getRootNode();
+			this.right = right.getRoot();
 	}
+	
+	public boolean isLeaf() {
+		if(right.equals(null) && left.equals(null))
+			return true;
+		else
+			return false;
+	}
+	
 	
 	public int numChildren() {
 		
