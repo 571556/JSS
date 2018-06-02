@@ -200,9 +200,23 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedQueue<BinaryTreeNode<T>> queue = new LinkedQueue<BinaryTreeNode<T>>();
+		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
+		BinaryTreeNode<T> node = root;
+		queue.enqueue(node);
+		while(!(queue.isEmpty())) {
+			node = queue.dequeue();
+			if(node.getElement() != null) {
+				tempList.addToRear(node.getElement());
+				queue.enqueue(node.getLeft());
+				queue.enqueue(node.getRight());
+			}else
+				queue.enqueue(null);
+		}
+		
+		return new TreeIterator(tempList.iterator()); 
 	}
+	
 	
 	private class TreeIterator implements Iterator<T>{
 
