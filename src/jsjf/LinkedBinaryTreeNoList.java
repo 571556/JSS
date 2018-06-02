@@ -1,22 +1,25 @@
 package jsjf;
 
-import java.util.*;
-import jsjf.exception.*;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
+import jsjf.exception.ElementNotFoundException;
+
+public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	protected BinaryTreeNode<T> root;
 	protected int modCount;
 	
-	public LinkedBinaryTree() {
+	public LinkedBinaryTreeNoList() {
 		root = null;
 	}
 	
-	public LinkedBinaryTree(T element) {
+	public LinkedBinaryTreeNoList(T element) {
 		root = new BinaryTreeNode<T>(element);
 	}
 	
-	public LinkedBinaryTree(T element, LinkedBinaryTree<T> left, LinkedBinaryTree<T> right) {
+	public LinkedBinaryTreeNoList(T element, LinkedBinaryTree<T> left, LinkedBinaryTree<T> right) {
 		root = new BinaryTreeNode<T>(element);
 		root.setLeft(left.root);
 		root.setRight(right.root);
@@ -200,38 +203,17 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-<<<<<<< HEAD
-		LinkedQueue<BinaryTreeNode<T>> queue = new LinkedQueue<BinaryTreeNode<T>>();
-		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
-		BinaryTreeNode<T> node = root;
-		queue.enqueue(node);
-		while(!(queue.isEmpty())) {
-			node = queue.dequeue();
-			if(node.getElement() != null) {
-				tempList.addToRear(node.getElement());
-				queue.enqueue(node.getLeft());
-				queue.enqueue(node.getRight());
-			}else
-				queue.enqueue(null);
-		}
-		
-		return new TreeIterator(tempList.iterator()); 
-=======
-		
-		
-		
+		// TODO Auto-generated method stub
 		return null;
->>>>>>> bfc1fce9ffe5ccb9257298abe41b738d31386017
 	}
-	
 	
 	private class TreeIterator implements Iterator<T>{
 
-		private Iterator<T> iterator;
+		private BinaryTreeNode<T> current;
 		private int iteratorModCount;
 		
-		public TreeIterator(Iterator<T> iterator) {
-			this.iterator = iterator;
+		public TreeIterator() {
+			current = root;
 			iteratorModCount = modCount;
 		}
 		
@@ -259,7 +241,5 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 		
 		
 	}
-	
-	
 	
 }
