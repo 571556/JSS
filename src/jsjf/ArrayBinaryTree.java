@@ -6,6 +6,7 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 	
 	private T[] array;
 	private int size;
+	private int modCount;
 	
 	public ArrayBinaryTree() {
 		array = (T[])(new Object[100]);
@@ -21,17 +22,18 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 		array[1] = left.array[0];
 		array[2] = right.array[0];
 		int position = 1;
-		for(int i = 1; i < left.size - 1; i++) {
-			array[2 * i + 1] = left.array[i];
-			array[2 * (i + 1)] = left.array[i + 1];
+		for(int i = 0; i < left.size; i++) {
+			
 		}
-		
 	}
 	
-	private void mergerBinaryTrees(ArrayBinaryTree<T> right, ArrayBinaryTree<T> left) {
-		
+	private void expand(){
+		T[] array = (T[])(new Object[this.array.length * 2]);
+		for(int i = 0; i < this.array.length; i++) {
+			array[i] = this.array[i];
+		}
+		this.array = array;
 	}
-	
 	public int getLeft(int node) {
 		return 2 * node + 1;
 	}
