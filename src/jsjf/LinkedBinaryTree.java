@@ -200,7 +200,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-<<<<<<< HEAD
+
 		LinkedQueue<BinaryTreeNode<T>> queue = new LinkedQueue<BinaryTreeNode<T>>();
 		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
 		BinaryTreeNode<T> node = root;
@@ -216,12 +216,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 		}
 		
 		return new TreeIterator(tempList.iterator()); 
-=======
-		
-		
-		
-		return null;
->>>>>>> bfc1fce9ffe5ccb9257298abe41b738d31386017
+
 	}
 	
 	
