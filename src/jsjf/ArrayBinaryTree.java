@@ -1,6 +1,8 @@
 package jsjf;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import jsjf.exception.ElementNotFoundException;
 
@@ -115,9 +117,21 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 
 	@Override
 	public Iterator<T> iteratorInOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		T[] iArray = (T[])(new Object[100]);
+		LinkedQueue<T> queue = new LinkedQueue<T>();
+		iArray[0] = array[0];
+		int node = 0;
+		int position = 0;
+		while( !queue.isEmpty() ) {
+			
+			T element = queue.dequeue();
+			
+		}
+		
+		return TreeIterator()
+		
 	}
+	
 
 	@Override
 	public Iterator<T> iteratorPreOrder() {
@@ -141,6 +155,41 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private class TreeIterator implements Iterator<T>{
+
+		private T[] iteratorArray;
+		private int iteratorModCount;
+		private int current;
+		
+		public TreeIterator(T[] iArray) {
+			iteratorArray = iArray;
+			iteratorModCount = modCount;
+			current = 0;
+		}
+		
+		@Override
+		public boolean hasNext() throws ConcurrentModificationException{
+			
+			if(iteratorModCount != modCount)
+				throw new ConcurrentModificationException("ArrayBinaryTree");
+			
+			return (iteratorArray[current] != null);
+		}
+
+		@Override
+		public T next() throws ConcurrentModificationException, NoSuchElementException{
+			
+			if(!hasNext()) {
+				throw new NoSuchElementException("ArrayBinaryTree");
+			}
+			
+			T result = iteratorArray[current];
+			current++;
+			return result;
+		}
+		
 	}
 
 }
