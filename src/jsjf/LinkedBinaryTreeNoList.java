@@ -210,11 +210,12 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 	private class TreeIterator implements Iterator<T>{
 
 		private T[] array;
+		private int current;
 		private int iteratorModCount;
 		
 		public TreeIterator() {
-			 = root;
 			iteratorModCount = modCount;
+			current = 0;
 		}
 		
 		
