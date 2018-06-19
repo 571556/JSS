@@ -129,5 +129,26 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
 		
 		return string;
 	}
+	
+	private class ArrayIterator<T> implements Iterator<T>{
+
+		
+		
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		
+		
+		
+	}
 
 }
