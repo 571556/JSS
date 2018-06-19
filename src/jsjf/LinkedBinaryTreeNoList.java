@@ -157,17 +157,22 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorInOrder() {
-		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
-		inOrder(root, tempList);
+		T[] array = (T[])(new Object[size()]);
+		CircularArrayQueue<T> queue = new CircularArrayQueue<T>();
+
+		inOrder(root, queue);
+	
+		for(int i = 0; i < array.length; i++)
+			array[i] = queue.dequeue();
 		
-		return new TreeIterator(tempList.iterator());
+		return new TreeIterator(array);
 	}
 	
-	protected void inOrder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+	protected void inOrder(BinaryTreeNode<T> node, CircularArrayQueue<T> queue) {
 		if(node != null) {
-			inOrder(node.getLeft(), tempList);
-			tempList.addToRear(node.getElement());
-			inOrder(node.getRight(), tempList);
+			inOrder(node.getLeft(), queue);
+			queue.enqueue(node.getElement());
+			inOrder(node.getRight(), queue);
 		}
 	}
 
@@ -213,7 +218,8 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 		private int current;
 		private int iteratorModCount;
 		
-		public TreeIterator() {
+		public TreeIterator(T[] array) {
+			this.array = array;
 			iteratorModCount = modCount;
 			current = 0;
 		}
@@ -225,16 +231,17 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 			if(iteratorModCount != modCount)
 				throw new ConcurrentModificationException();
 			
-			return (iterator.hasNext());
+			return (array[current] != null);
 		}
 
 		@Override
 		public T next() throws ConcurrentModificationException, NoSuchElementException{
 			
-			if(!(iterator.hasNext()))
+			if(!hasNext())
 				throw new NoSuchElementException();
 			
-			T result = iterator.next();
+			T result = array[current];
+			current++;
 			return result;
 
 		}

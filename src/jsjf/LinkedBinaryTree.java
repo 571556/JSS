@@ -18,8 +18,11 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 	
 	public LinkedBinaryTree(T element, LinkedBinaryTree<T> left, LinkedBinaryTree<T> right) {
 		root = new BinaryTreeNode<T>(element);
-		root.setLeft(left.root);
-		root.setRight(right.root);
+		if(left != null)
+			root.setLeft(left.root);
+		
+		if(right != null)
+			root.setRight(right.root);
 	}
 
 	@Override
