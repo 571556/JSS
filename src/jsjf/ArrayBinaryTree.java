@@ -8,27 +8,58 @@ import jsjf.exception.ElementNotFoundException;
 
 public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 	
-	private T[] array;
-	private int size;
+	private T[] treeArray;
 	private int modCount;
+	private final static int ROOT = 0;
 	
 	public ArrayBinaryTree() {
-		array = (T[])(new Object[100]);
+		treeArray = (T[])(new Object[100]);
 		modCount = 0;
 	}
 	
 	public ArrayBinaryTree(T element) {
-		array = (T[])(new Object[100]);
-		array[0] = element;
+		treeArray = (T[])(new Object[100]);
+		treeArray[0] = element;
 		modCount = 0;
 	}
 	
-	private void expand(){
-		T[] array = (T[])(new Object[this.array.length * 2]);
-		for(int i = 0; i < this.array.length; i++) {
-			array[i] = this.array[i];
+	public ArrayBinaryTree(T element, ArrayBinaryTree<T> left, ArrayBinaryTree<T> right) {
+		treeArray = (T[])(new Object[100]);
+		treeArray[0] = element; 
+		modCount = 0;
+		
+		if(left != null)
+			insertLeftTree(left.treeArray, left.ROOT, getLeft(ROOT));
+		
+		if(right != null)
+			insertRightTree(right.treeArray, right.ROOT, getRight(ROOT));
+	}
+	
+	private void insertLeftTree(T[] leftTree, int leftTreePosition, int newTreePosition) {
+		
+		if(leftTree[leftTreePosition] != null) {
+			treeArray[newTreePosition] = leftTree[leftTreePosition];
+			insertLeftTree(leftTree, getLeft(leftTreePosition), getLeft(newTreePosition));
+			insertLeftTree(leftTree, getRight(leftTreePosition), getRight(newTreePosition));
 		}
-		this.array = array;
+		
+	}
+	
+	private void insertRightTree(T[] rightTree, int rightTreePosition, int newTreePosition) {
+		
+		if(rightTree[rightTreePosition] != null) {
+			treeArray[newTreePosition] = rightTree[rightTreePosition];
+			insertRightTree(rightTree, getLeft(rightTreePosition), getLeft(newTreePosition));
+			insertRightTree(rightTree, getRight(rightTreePosition), getRight(newTreePosition));
+		}
+	}
+	
+	private void expand(){
+		T[] array = (T[])(new Object[this.treeArray.length * 2]);
+		for(int i = 0; i < this.treeArray.length; i++) {
+			array[i] = this.treeArray[i];
+		}
+		this.treeArray = array;
 	}
 	
 	public int getLeft(int node) {
@@ -36,7 +67,7 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 	}
 	
 	public void setLeft(int node, T element) {
-		array[2 * node + 1] = element;
+		treeArray[2 * node + 1] = element;
 	}
 	
 	public int getRight(int node) {
@@ -44,12 +75,12 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 	}
 	
 	public void setRight(int node, T element) {
-		array[2 * (node + 1)] = element;
+		treeArray[2 * (node + 1)] = element;
 	}
 	
 	@Override
 	public T getRootElement() {
-		return array[0];
+		return treeArray[0];
 	}
 	
 	public int getRoot() {
@@ -58,11 +89,13 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 
 	@Override
 	public boolean isEmpty() {
-		return (size == 0);
+		return (size() == 0);
 	}
 
 	@Override
 	public int size() {
+		int size = 0;
+		
 		return size;
 	}
 
@@ -74,7 +107,7 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 		queue.enqueue(0);
 		while(!queue.isEmpty() && !result) {
 			int e = queue.dequeue();
-			T element = array[e];
+			T element = treeArray[e];
 			
 			if(element.equals(targetElement))
 				result = true;
@@ -96,15 +129,15 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 		if(current == -1)
 			throw new ElementNotFoundException("ArrayBinaryTree");
 		
-		return array[current];
+		return treeArray[current];
 	}
 	
 	private int findNode(T targetElement,int node) {
 		
-		if(array[node] == null)
+		if(treeArray[node] == null)
 			return -1;
 		
-		if(array[node].equals(targetElement))
+		if(treeArray[node].equals(targetElement))
 			return node;
 		
 		int temp = findNode(targetElement, getLeft(node));
@@ -117,38 +150,75 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 
 	@Override
 	public Iterator<T> iteratorInOrder() {
-		T[] iArray = (T[])(new Object[100]);
+		T[] iArray = (T[])(new Object[size()]);
 		LinkedQueue<T> queue = new LinkedQueue<T>();
-		iArray[0] = array[0];
-		int node = 0;
 		int position = 0;
-		while( !queue.isEmpty() ) {
-			
-			T element = queue.dequeue();
-			
+		
+		inOrder(queue,position);
+		
+		for(int i = 0; i < iArray.length; i++)
+			iArray[i] = queue.dequeue();
+		
+		return new TreeIterator(iArray);
+		
+	}
+	
+	private void inOrder(LinkedQueue<T> queue, int position) {
+		if(treeArray[position] != null) {
+			inOrder(queue,getLeft(position));
+			queue.enqueue(treeArray[position]);
+			inOrder(queue,getRight(position));
 		}
-		
-		return TreeIterator()
-		
 	}
 	
 
 	@Override
 	public Iterator<T> iteratorPreOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		T[] iArray = (T[])(new Object[size()]);
+		LinkedQueue<T> queue = new LinkedQueue<T>();
+		int position = 0;
+		
+		preOrder(queue, position);
+		
+		for(int i = 0; i < iArray.length; i++)
+			iArray[i] = queue.dequeue();
+		
+		return new TreeIterator(iArray);
+	}
+	
+	private void preOrder(LinkedQueue<T> queue, int position) {
+		if(treeArray[position] != null) {
+			queue.enqueue(treeArray[position]);
+			preOrder(queue,getLeft(position));
+			preOrder(queue,getRight(position));
+		}
 	}
 
 	@Override
 	public Iterator<T> iteratorPostOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		T[] iArray = (T[])(new Object[size()]);
+		LinkedQueue<T> queue = new LinkedQueue<T>();
+		int position = 0;
+		
+		postOrder(queue, position);
+		
+		for(int i = 0; i < iArray.length; i++)
+			iArray[i] = queue.dequeue();
+		
+		return new TreeIterator(iArray);
+	}
+	
+	private void postOrder(LinkedQueue<T> queue, int position) {
+		if(treeArray[position] != null) {
+			postOrder(queue,getLeft(position));
+			postOrder(queue,getRight(position));
+			queue.enqueue(treeArray[position]);
+		}
 	}
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TreeIterator(treeArray);
 	}
 
 	@Override

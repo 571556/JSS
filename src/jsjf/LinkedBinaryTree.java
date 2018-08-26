@@ -207,6 +207,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>, Iterable<T>{
 		queue.enqueue(node);
 		while(!(queue.isEmpty())) {
 			node = queue.dequeue();
+			
 			if(node.getElement() != null) {
 				tempList.addToRear(node.getElement());
 				queue.enqueue(node.getLeft());

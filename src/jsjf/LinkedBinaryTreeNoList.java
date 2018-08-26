@@ -19,10 +19,13 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 		root = new BinaryTreeNode<T>(element);
 	}
 	
-	public LinkedBinaryTreeNoList(T element, LinkedBinaryTree<T> left, LinkedBinaryTree<T> right) {
+	public LinkedBinaryTreeNoList(T element, LinkedBinaryTreeNoList<T> left, LinkedBinaryTreeNoList<T> right) {
 		root = new BinaryTreeNode<T>(element);
-		root.setLeft(left.root);
-		root.setRight(right.root);
+		if(left != null)
+			root.setLeft(left.root);
+		
+		if(right != null)
+			root.setRight(right.root);
 	}
 
 	@Override
@@ -157,11 +160,12 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorInOrder() {
-		T[] array = (T[])(new Object[size()]);
 		CircularArrayQueue<T> queue = new CircularArrayQueue<T>();
 
 		inOrder(root, queue);
 	
+		T[] array = (T[])(new Object[queue.size()]);
+		
 		for(int i = 0; i < array.length; i++)
 			array[i] = queue.dequeue();
 		
@@ -178,38 +182,69 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iteratorPreOrder() {
-		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
-		preOrder(root,tempList);
-		return new TreeIterator(tempList.iterator());
+		CircularArrayQueue<T> queue = new CircularArrayQueue<T>();
+		preOrder(root,queue);
+		T[] array = (T[])(new Object[queue.size()]);
+		
+		for(int i = 0; i < array.length; i++)
+			array[i] = queue.dequeue();
+		
+		return new TreeIterator(array);
 	}
 	
-	private void preOrder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+	private void preOrder(BinaryTreeNode<T> node, CircularArrayQueue<T> queue) {
 		if(node != null) {
-			tempList.addToRear(node.getElement());
-			preOrder(node.getLeft(),tempList);
-			preOrder(node.getRight(),tempList);
+			queue.enqueue(node.getElement());
+			preOrder(node.getLeft(),queue);
+			preOrder(node.getRight(),queue);
 		}
 	}
 
 	@Override
 	public Iterator<T> iteratorPostOrder() {
-		ArrayUnorderedList<T> tempList = new ArrayUnorderedList<T>();
-		postOrder(root,tempList);
-		return new TreeIterator(tempList.iterator());
+		CircularArrayQueue<T> queue = new CircularArrayQueue<T>();
+		postOrder(root,queue);
+		T[] array = (T[])(new Object[queue.size()]);
+		
+		for(int i = 0; i < array.length; i++)
+			array[i] = queue.dequeue();
+		
+		return new TreeIterator(array);
 	}
 	
-	private void postOrder(BinaryTreeNode<T> node, ArrayUnorderedList<T> tempList) {
+	private void postOrder(BinaryTreeNode<T> node, CircularArrayQueue<T> queue) {
 		if(node != null) {
-			postOrder(node.getLeft(),tempList);
-			postOrder(node.getRight(),tempList);
-			tempList.addToRear(node.getElement());
+			postOrder(node.getLeft(),queue);
+			postOrder(node.getRight(),queue);
+			queue.enqueue(node.getElement());
 		}
 	}
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		CircularArrayQueue<BinaryTreeNode<T>> queue = new CircularArrayQueue<BinaryTreeNode<T>>();
+		CircularArrayQueue<T> eQueue = new CircularArrayQueue<T>();
+		BinaryTreeNode<T> node = root;
+		queue.enqueue(node);
+		
+		while(!queue.isEmpty()) {
+			node = queue.dequeue();
+			if(node != null) {
+				if(node.getElement() != null)
+					eQueue.enqueue(node.getElement());
+				queue.enqueue(node.getLeft());
+				queue.enqueue(node.getRight());
+			}
+		}
+		
+		T[] elements = (T[])(new Object[eQueue.size()]);
+		
+		for (int i = 0; i < elements.length; i++) {
+			elements[i] = eQueue.dequeue();
+		}
+		
+		
+		return new TreeIterator(elements);
 	}
 	
 	private class TreeIterator implements Iterator<T>{
@@ -219,7 +254,7 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 		private int iteratorModCount;
 		
 		public TreeIterator(T[] array) {
-			this.array = array;
+			this.array = (T[]) array;
 			iteratorModCount = modCount;
 			current = 0;
 		}
@@ -230,6 +265,9 @@ public class LinkedBinaryTreeNoList<T> implements BinaryTreeADT<T>, Iterable<T>{
 			
 			if(iteratorModCount != modCount)
 				throw new ConcurrentModificationException();
+			
+			if(current == array.length)
+				return false;
 			
 			return (array[current] != null);
 		}

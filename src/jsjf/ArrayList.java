@@ -1,6 +1,9 @@
 package jsjf;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import jsjf.exception.*;
 
 public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
@@ -105,8 +108,8 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<T> itr = new ArrayListIterator<T>();
+		return itr;
 	}
 	
 	private int find(T target) {
@@ -130,20 +133,36 @@ public abstract class ArrayList<T> implements ListADT<T>, Iterable<T>{
 		return string;
 	}
 	
-	private class ArrayIterator<T> implements Iterator<T>{
+	private class ArrayListIterator<T> implements Iterator<T>{
 
+		private T[] iteratorList;
+		private int current;
+		private int iteratorModCount;
 		
+		public ArrayListIterator() {
+			iteratorList = (T[]) list;
+			current = 0;
+			iteratorModCount = modCount;
+		}
 		
 		@Override
-		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean hasNext() throws ConcurrentModificationException{
+			
+			if(iteratorModCount != modCount)
+				throw new ConcurrentModificationException();
+			
+			return (iteratorList[current] != null);
 		}
 
 		@Override
-		public T next() {
-			// TODO Auto-generated method stub
-			return null;
+		public T next() throws ConcurrentModificationException, NoSuchElementException{
+			
+			if(!hasNext())
+				throw new NoSuchElementException();
+			
+			T result = iteratorList[current];
+			current++;
+			return result;
 		}
 		
 		
