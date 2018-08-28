@@ -92,11 +92,24 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 		return (size() == 0);
 	}
 
+	/* Returns the size of the binary tree
+	 * uses the ArrayBinaryTree treeArray and getRoot() as beginning parameters.
+	 * Returns the size of the ArrayBinaryTree.
+	 */
 	@Override
 	public int size() {
-		int size = 0;
-		
-		return size;
+		return inOrderCount(treeArray, getRoot());
+	}
+	/* Finds the size of the binary tree recursively 
+	 */
+	private int inOrderCount(T[] array, int position) {
+		int count = 0;
+		if(array[position] != null) {
+			count++;
+			count += inOrderCount(array, getLeft(position));
+			count += inOrderCount(array, getRight(position));
+		}
+		return count;
 	}
 
 	@Override
@@ -218,7 +231,25 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
-		return new TreeIterator(treeArray);
+		
+		T[] array = (T[])(new Object[size()]);
+		T element;
+		CircularArrayQueue<T> queue = new CircularArrayQueue<T>();
+		CircularArrayQueue<T> newQueue = new CircularArrayQueue<T>();
+		
+		for(int i = 0; i < treeArray.length; i++) {
+			if(treeArray[i] != null) {
+				queue.enqueue(treeArray[i]);
+			}
+		}
+		
+		int pos = 0;
+		while(!queue.isEmpty()) {
+			array[pos] = queue.dequeue();
+			pos++;
+		}
+		
+		return new TreeIterator(array);
 	}
 
 	@Override
@@ -244,6 +275,9 @@ public class ArrayBinaryTree<T> implements Iterable<T>, BinaryTreeADT<T>{
 			
 			if(iteratorModCount != modCount)
 				throw new ConcurrentModificationException("ArrayBinaryTree");
+			
+			if(current == iteratorArray.length)
+				return false;
 			
 			return (iteratorArray[current] != null);
 		}

@@ -1,19 +1,17 @@
 package kladd;
 
-import jsjf.LinkedList;
-import static jsjf.Sort.*;
-import jsjf.ListADT;
+import static javax.swing.JOptionPane.*;
+
 
 public class kladd {
 	
 	public static void main (String[] args) {
 
+		String ord = showInputDialog("Hva vil du si?");
+		showMessageDialog(null,ord);
 		
-		Integer[] tall = {1,2,6,3,5,8,9};
-		bubbleSort(tall);
-		
-		for(int i = 0; i < tall.length; i++)
-			System.out.println(tall[i] + " ");
 	}
+	
+
 	
 }

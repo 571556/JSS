@@ -19,5 +19,7 @@ public class ArrayBinaryTreeTest {
 	while(itr.hasNext()) {
 		System.out.println(itr.next());
 	  }
+	
 	}
+	
 }
